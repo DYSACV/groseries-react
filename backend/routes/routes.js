@@ -10,11 +10,29 @@ router.get("/api/clients", async (req, res) => {
   res.json(clients);
 });
 
+// router.post("/api/clients", async (req, res) => {
+//   const newClient = new Client(req.body);
+//   await newClient.save();
+//   res.json(newClient);
+// });
+
 router.post("/api/clients", async (req, res) => {
-  const newClient = new Client(req.body);
-  await newClient.save();
-  res.json(newClient);
+  try {
+    const existingClient = await Client.findOne({ id_client: req.body.id_client });
+
+    if (existingClient) {
+      return res.status(400).json({ message: "El ID del cliente ya existe." });
+    }
+
+    const newClient = new Client(req.body);
+    await newClient.save();
+    res.status(201).json(newClient);
+
+  } catch (error) {
+    res.status(500).json({ message: "Error al crear el cliente", error });
+  }
 });
+
 
 router.put("/api/clients/:id", async (req, res) => {
   const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -32,10 +50,26 @@ router.get("/api/products", async (req, res) => {
   res.json(products);
 });
 
+// router.post("/api/products", async (req, res) => {
+//   const newProduct = new Product(req.body);
+//   await newProduct.save();
+//   res.json(newProduct);
+// });
 router.post("/api/products", async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  res.json(newProduct);
+  try {
+    const existingProduct = await Client.findOne({ barcode: req.body.barcode });
+
+    if (existingProduct) {
+      return res.status(400).json({ message: "El ID de producto ya existe." });
+    }
+
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.status(201).json(newProduct);
+
+  } catch (error) {
+    res.status(500).json({ message: "Error al guardar este producto", error });
+  }
 });
 
 router.put("/api/products/:id", async (req, res) => {
@@ -54,10 +88,25 @@ router.get("/api/employees", async (req, res) => {
   res.json(employees);
 });
 
+// router.post("/api/employees", async (req, res) => {
+//   const newEmployee = new Employes(req.body);
+//   await newEmployee.save();
+//   res.json(newEmployee);
+// });
 router.post("/api/employees", async (req, res) => {
-  const newEmployee = new Employes(req.body);
-  await newEmployee.save();
-  res.json(newEmployee);
+  try {
+    const existingEmployee = await Employes.findOne({ employe_number: req.body.employe_number });
+
+    if (existingEmployee) {
+      return res.status(400).json({ message: "El ID de empleado ya existe." });
+    }
+    const newEmployee = new Employes(req.body);
+    await newEmployee.save();
+    res.status(201).json(newEmployee);
+
+  } catch (error) {
+    res.status(500).json({ message: "Error al crear un nuevo empleado ", error });
+  }
 });
 
 router.put("/api/employees/:id", async (req, res) => {

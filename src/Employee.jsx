@@ -16,36 +16,58 @@ export default function Employees() {
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/employees")
+    axios.get("http://192.168.1.72:5000/api/employees")
       .then((res) => setEmployees(res.data))
       .catch((err) => console.error(err));
   }, []);
 
+  // Manejar cambios en el formulario
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+ //  Guardar o editar un empleado
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      await axios.put(`http://localhost:5000/api/employees/${editingId}`, formData);
-      setEditingId(null);
-    } else {
-      await axios.post("http://localhost:5000/api/employees", formData);
+    try{
+      if (editingId) {
+        // editar empleado
+        await axios.put(`http://192.168.1.72:5000/api/employees/${editingId}`, formData);
+        setEditingId(null);
+      } else {
+        // Crear nuevo Empleado
+        await axios.post("http://192.168.1.72:5000/api/employees", formData);
+      }
+  
+      const res = await axios.get("http://192.168.1.72:5000/api/employees");
+      setEmployees(res.data);
+      setFormData({ 
+        employe_number: "",
+        name: "", 
+        lastname: "",
+        aye: "", 
+        email: "",
+        salary: "" 
+      });
+      alert ("Empleado guardado correctamente")
+      }catch(error){
+        if (error.response && error.response.status === 400) {
+        alert("Error: El ID de éste empleado ya existe.");
+      } else {
+        console.error(error);
+        alert("No se puede guardar empleado.");
+      }
     }
-
-    axios.get("http://localhost:5000/api/employees").then((res) => setEmployees(res.data));
-    setFormData({ employe_number: "", name: "", lastname: "", aye: "", email: "", salary: "" });
-  };
-
+  }
+ //  Editar
   const handleEdit = (employee) => {
     setFormData(employee);
     setEditingId(employee._id);
   };
-
+  //  Eliminar
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/employees/${id}`);
+    await axios.delete(`http://192.168.1.72:5000/api/employees/${id}`);
     setEmployees(employees.filter((employee) => employee._id !== id));
   };
 
@@ -55,11 +77,17 @@ export default function Employees() {
 
       <form onSubmit={handleSubmit} className="form">
         <input type="text" name="employe_number" placeholder="Número de empleado" value={formData.employe_number} onChange={handleChange} required />
+
         <input type="text" name="name" placeholder="Nombre" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="lastname" placeholder="Apellido" value={formData.lastname} onChange={handleChange} required />
+
+        <input type="text" name="lastname" placeholder="Apellidos" value={formData.lastname} onChange={handleChange} required />
+
         <input type="number" name="aye" placeholder="Edad" value={formData.aye} onChange={handleChange} required />
+
         <input type="email" name="email" placeholder="Correo electrónico" value={formData.email} onChange={handleChange} required />
+
         <input type="number" name="salary" placeholder="Salario" value={formData.salary} onChange={handleChange} required />
+
         <button type="submit">{editingId ? "Actualizar" : "Guardar"}</button>
       </form>
       <h3>Lista de Empleados</h3>
