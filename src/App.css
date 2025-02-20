@@ -1,86 +1,82 @@
-.app-container {
-  padding: auto;
+/* General body styles */
+body {
   font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: auto;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Center the main container */
+div {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
 }
 
-.header {
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
+/* Header styles */
+h1 {
   text-align: center;
+  color: #4caf50; /* Green */
+  margin-bottom: 20px;
 }
 
+/* Navigation styles */
 nav ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
 }
 
-nav a {
+nav ul li {
+  font-size: 18px;
+}
+
+nav ul li a {
   text-decoration: none;
-  color: white;
+  color: #ffeb3b; /* Yellow */
   font-weight: bold;
 }
 
-.products-container {
-  margin-top: 20px;
+nav ul li a:hover {
+  color: #4caf50; /* Green hover effect */
 }
 
-.product-form {
+/* Form styling */
+form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-form input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
+form input, form select, form button {
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+form input[type="submit"], form button {
+  background-color: #4caf50; /* Green */
+  color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.8;
+form input[type="submit"]:hover, form button:hover {
+  background-color: #45a049;
 }
 
-.edit-btn {
-  background-color: #f0ad4e;
-  color: white;
+/* Add some space around sections */
+section {
+  margin-bottom: 40px;
 }
 
-.delete-btn {
-  background-color: #d9534f;
-  color: white;
-}
-
-.product-list {
-  list-style-type: style;;
-  padding: 0;
-}
-
-.product-card {
-  background: #120e0e;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.footer {
-  margin-top: 20px;
-  text-align: center;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-}
+/* Footer or other container styles can go here */
