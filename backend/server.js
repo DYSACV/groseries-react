@@ -25,5 +25,5 @@ mongoose.connect(process.env.MONGO_DUL, { useNewUrlParser: true, useUnifiedTopol
 // });
 
 app.listen(5000, '0.0.0.0', () => {
-  console.log('Servidor corriendo en:');
+  console.log('Servidor corriendo en el puerto 5000');
 });
